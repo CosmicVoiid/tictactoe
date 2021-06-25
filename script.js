@@ -1,23 +1,53 @@
-const GameBoard = (() => {
+//Create game board
+const gameBoard = (() => {
 	const grid = document.querySelector("#game-board");
-	let gameBoard = ["O", "O", "X", "O", "X", "X", "O", "X", "X"];
-	const displayController = () => {
-		for (let i = 0; i < gameBoard.length; i++) {
+	const boardArray = [];
+
+	const createBoard = () => {
+		for (let i = 0; i < 9; i++) {
+			boardArray[i] = "";
 			const gridItem = document.createElement("div");
 			gridItem.classList.add("game-marker");
-			gridItem.textContent = gameBoard[i];
 			grid.appendChild(gridItem);
 		}
 	};
-	return { gameBoard, displayController };
+
+	const changeArray = (i, mark) => {
+		return (boardArray[i] = mark);
+	};
+
+	const getArray = () => boardArray;
+
+	return { createBoard, getArray, changeArray };
 })();
 
+//create players
 const playerFactory = (player, mark) => {
-	return { player, mark };
+	const getPlayer = () => player;
+	const getMark = () => mark;
+	return { getPlayer, getMark };
 };
 
-const player1 = playerFactory("player1", "X");
-const player2 = playerFactory("player2", "O");
+//Control game flow
+const game = (() => {
+	gameBoard.createBoard();
+	const player1 = playerFactory("player1", "X");
+	const player2 = playerFactory("player2", "O");
+	const gridItem = document.querySelectorAll(".game-marker");
 
-console.log(player1.mark);
-GameBoard.displayController();
+	let turnCounter = true;
+	const turn = () => {
+		let temp = turnCounter;
+		turnCounter = !turnCounter;
+		return temp ? player1.getMark() : player2.getMark();
+	};
+
+	for (let i = 0; i < 9; i++) {
+		gridItem[i].addEventListener("click", () => {
+			let player = turn();
+			gridItem[i].textContent = player;
+			gameBoard.changeArray(i, player);
+			console.log(gameBoard.getArray());
+		});
+	}
+})();
