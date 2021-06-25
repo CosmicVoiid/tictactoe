@@ -15,8 +15,8 @@ header {
 }
 
 #main {
-	width: 35vw;
-	height: 35vw;
+	width: 50vmin;
+	height: 50vmin;
 	background-color: #eee;
 	display: flex;
 	justify-content: center;
@@ -30,6 +30,15 @@ header {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(3, 1fr);
+	grid-gap: 1px;
+}
+
+.game-marker {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2em;
+	background-color: white;
 }
 
 footer {
