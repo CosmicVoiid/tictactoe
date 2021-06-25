@@ -16,7 +16,7 @@ const gameBoard = (() => {
 		return (boardArray[i] = mark);
 	};
 
-	const getArray = () => boardArray;
+	const getArray = (i) => boardArray[i];
 
 	return { createBoard, getArray, changeArray };
 })();
@@ -42,8 +42,18 @@ const game = (() => {
 		return temp ? player1.getMark() : player2.getMark();
 	};
 
+	const markCheck = (i) => {
+		if (gameBoard.getArray(i) !== "") {
+			gridItem[i].removeEventListener;
+			return false;
+		}
+	};
+
 	for (let i = 0; i < 9; i++) {
 		gridItem[i].addEventListener("click", () => {
+			//check if grid square is occupied
+			if (markCheck(i) === false) return false;
+
 			let player = turn();
 			gridItem[i].textContent = player;
 			gameBoard.changeArray(i, player);
