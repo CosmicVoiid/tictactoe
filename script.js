@@ -17,7 +17,6 @@ const gameBoard = (() => {
 			const gridItem = document.querySelectorAll(".game-marker");
 			boardArray[i] = "";
 			gridItem[i].textContent = "";
-			console.log(boardArray[i]);
 		}
 	};
 
@@ -35,15 +34,36 @@ const gameBoard = (() => {
 const playerFactory = (player, mark) => {
 	const getPlayer = () => player;
 	const getMark = () => mark;
-	return { getPlayer, getMark };
+	return { getPlayer, getMark, player };
+};
+
+const player1Display = () => {
+	message.textContent = `${player1.getPlayer()}'s turn!`;
 };
 
 //Control game flow
 const game = (() => {
 	gameBoard.createBoard();
 	const message = document.querySelector("#message");
-	const player1 = playerFactory("player1", "X");
-	const player2 = playerFactory("player2", "O");
+	const form = document.querySelector("#form");
+	player1 = playerFactory("player1Name", "X");
+	player1 = playerFactory("player2Name", "O");
+	const playerNames = () => {
+		form.addEventListener("submit", (e) => {
+			e.preventDefault();
+			const modal = document.querySelector("#modal");
+			const modalOverlay = document.querySelector("#modal-overlay");
+			modal.classList.add("close");
+			modalOverlay.classList.add("close");
+			const player1Name = document.querySelector("#player1").value;
+			const player2Name = document.querySelector("#player2").value;
+			player1 = playerFactory(`${player1Name}`, "X");
+			player2 = playerFactory(`${player2Name}`, "O");
+			message.textContent = `${player1.getPlayer()}'s turn!`;
+			return { player1, player2 };
+		});
+	};
+	//const player2 = startGame.player2;
 	const gridItem = document.querySelectorAll(".game-marker");
 	const header = document.querySelector("header");
 
@@ -53,6 +73,10 @@ const game = (() => {
 		let temp = turnCounter;
 		turnCounter = !turnCounter;
 		return temp ? player1 : player2;
+	};
+
+	const resetTurn = () => {
+		turnCounter = true;
 	};
 
 	//checks if grid square has already been occupied
@@ -148,7 +172,6 @@ const game = (() => {
 		if (gameBoard.getArray().indexOf("") === -1) return true;
 	};
 
-	message.textContent = `${player1.getPlayer()}'s turn!`;
 	const gameFlow = () => {
 		let endgame = false;
 		for (let i = 0; i < 9; i++) {
@@ -185,7 +208,15 @@ const game = (() => {
 		}
 	};
 
-	return { gameCheck, gameFlow, player1, player2 };
+	return {
+		gameCheck,
+		gameFlow,
+		playerNames,
+		resetTurn,
+		player1Display,
+		player1,
+		player2,
+	};
 })();
 
 const newGame = (() => {
@@ -194,10 +225,13 @@ const newGame = (() => {
 		const message = document.querySelector("#message");
 		message.textContent = "";
 		gameBoard.clearBoard();
-		const player1 = game;
-		message.textContent = `${game.player1.getPlayer()}'s turn!`;
+		game.player1Display();
+		game.resetTurn();
 		game.gameFlow();
 	});
 })();
 
-game.gameFlow();
+const startGame = (() => {
+	game.playerNames();
+	game.gameFlow();
+})();
