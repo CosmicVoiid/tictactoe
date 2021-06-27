@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Caesar+Dressing&display=swap");
+
 body {
 	width: 100vw;
 	height: 100vh;
@@ -6,6 +8,7 @@ body {
 	align-items: center;
 	justify-content: space-between;
 	margin: 0;
+	font-family: "Caesar Dressing", Arial, Helvetica, sans-serif;
 }
 
 header {
@@ -16,6 +19,10 @@ header {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+
+h1 {
+	font-size: 3em;
 }
 
 #message {
@@ -62,6 +69,7 @@ footer {
 #restart {
 	font-size: 3vmin;
 	padding: 5px;
+	font-family: "Caesar Dressing", Arial, Helvetica, sans-serif;
 }
 
 .name {
@@ -70,6 +78,20 @@ footer {
 	position: relative;
 	left: 3%;
 	margin: 5%;
+	font-family: "Caesar Dressing", Arial, Helvetica, sans-serif;
+}
+
+.name::-webkit-input-placeholder {
+	font-family: "Caeser Dressing", Arial, Helvetica, sans-serif;
+}
+
+.name:-ms-input-placeholder {
+	font-family: "Caeser Dressing", Arial, Helvetica, sans-serif;
+}
+
+.name::placeholder {
+	font-family: "Caesar Dressing", Arial, Helvetica, sans-serif;
+	opacity: 1;
 }
 
 #start {
@@ -79,6 +101,7 @@ footer {
 	left: 36%;
 	top: 5vmin;
 	padding: 5px;
+	font-family: "Caesar Dressing", Arial, Helvetica, sans-serif;
 }
 
 .modal {
@@ -94,6 +117,13 @@ footer {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
+}
+
+#modal-title {
+	position: relative;
+	bottom: 10%;
+	font-size: 2em;
 }
 
 .modal-overlay {
